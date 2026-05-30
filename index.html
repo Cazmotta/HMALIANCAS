@@ -318,7 +318,9 @@ function goSite(){
 }
 function scrollTo(sel){
   const el=document.querySelector(sel);
-  if(el)el.scrollIntoView({behavior:'smooth'});
+  if(!el)return;
+  const top=el.getBoundingClientRect().top+window.scrollY-64;
+  window.scrollTo({top,behavior:'smooth'});
 }
 
 /* ============ CATALOG ============ */
