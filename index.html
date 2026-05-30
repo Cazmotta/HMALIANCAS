@@ -63,11 +63,11 @@ button,a{touch-action:manipulation;}
 
 /* ── CARD ── */
 .product-card{background:var(--white);border:1px solid var(--border);overflow:hidden;cursor:pointer;}
-.card-slider{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:#F5F0E8;touch-action:pan-y;}
-@media(max-width:539px){.card-slider{aspect-ratio:unset;height:260px;}}
-.card-slider-inner{position:absolute;inset:0;display:flex;transition:transform .35s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
-.card-slide{min-width:100%;height:100%;flex-shrink:0;}
-.card-slide img{width:100%;height:100%;object-fit:cover;}
+.card-slider{position:relative;width:100%;overflow:hidden;background:#F5F0E8;touch-action:pan-y;}
+.card-slider-inner{display:flex;transition:transform .35s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
+.card-slide{min-width:100%;flex-shrink:0;}
+.card-slide img{width:100%;height:auto;display:block;aspect-ratio:1;object-fit:cover;}
+.card-placeholder{width:100%;aspect-ratio:1;}
 .card-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#F0E8D5,#E0D0A8);color:var(--gold-dark);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;gap:.8rem;}
 .badge-encomenda{position:absolute;top:10px;left:10px;background:var(--dark);color:var(--gold-light);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;z-index:2;}
 .card-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:2;}
@@ -475,9 +475,14 @@ addSwipe('modal-img-wrap',(dir)=>{if(curModal)modalNav(dir);});
 
 /* ══ SWIPE HELPER ══ */
 function addSwipe(elId,cb){
-  let sx=0,sy=0;
+  let sx=0,sy=0,locked=false;
   const el=document.getElementById(elId);if(!el)return;
-  el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;locked=false;},{passive:true});
+  el.addEventListener('touchmove',e=>{
+    if(locked)return;
+    const dx=Math.abs(e.touches[0].clientX-sx),dy=Math.abs(e.touches[0].clientY-sy);
+    if(dx>dy&&dx>8){locked=true;e.preventDefault();}
+  },{passive:false});
   el.addEventListener('touchend',e=>{
     const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
     if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40)cb(dx<0?1:-1);
