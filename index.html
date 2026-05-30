@@ -272,8 +272,8 @@ input[type="file"]{display:none;}
   <nav>
     <span class="nav-logo">HM</span>
     <div class="nav-right">
-      <button class="nav-btn" onclick="scrollTo('sobre')">Sobre</button>
-      <button class="nav-btn" onclick="scrollTo('catalogo')">Catálogo</button>
+      <button class="nav-btn" onclick="navTo('sobre')">Sobre</button>
+      <button class="nav-btn" onclick="navTo('catalogo')">Catálogo</button>
       <button class="nav-btn outlined" onclick="openPin()">⚙ Painel</button>
     </div>
   </nav>
@@ -282,7 +282,7 @@ input[type="file"]{display:none;}
     <p class="hero-eye">Artesanal · Histórico · Único</p>
     <h1>Alianças feitas<br><em>com história</em></h1>
     <p>Cada aliança é forjada artesanalmente a partir de moedas brasileiras antigas — transformadas em símbolo eterno do seu amor.</p>
-    <button class="btn-primary" onclick="scrollTo('catalogo')">Ver Catálogo</button>
+    <button class="btn-primary" onclick="navTo('catalogo')">Ver Catálogo</button>
   </section>
 
   <section id="s-sobre">
@@ -424,7 +424,7 @@ function showPage(id){
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
-function scrollTo(s){
+function navTo(s){
   const el=document.getElementById('s-'+s);
   if(!el)return;
   const top=el.getBoundingClientRect().top+window.pageYOffset-56;
