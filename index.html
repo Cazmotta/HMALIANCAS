@@ -63,7 +63,8 @@ button,a{touch-action:manipulation;}
 
 /* ── CARD ── */
 .product-card{background:var(--white);border:1px solid var(--border);overflow:hidden;cursor:pointer;}
-.card-slider{position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:#F5F0E8;touch-action:pan-y;}
+.card-slider{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:#F5F0E8;touch-action:pan-y;}
+@media(max-width:539px){.card-slider{aspect-ratio:unset;height:260px;}}
 .card-slider-inner{position:absolute;inset:0;display:flex;transition:transform .35s cubic-bezier(.25,.46,.45,.94);will-change:transform;}
 .card-slide{min-width:100%;height:100%;flex-shrink:0;}
 .card-slide img{width:100%;height:100%;object-fit:cover;}
