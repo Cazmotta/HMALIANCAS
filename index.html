@@ -562,7 +562,7 @@ function selW(id,w){
 function updateWaLink(id){
   const p=prods.find(q=>q.id===id);
   const phone=cfg.whatsapp||'5500000000000';
-  const msg=encodeURIComponent(`Olá! Vim pelo site HM e gostaria de encomendar:\n\n*Modelo:* ${p.name}\n*Largura:* ${mW}mm\n*Acabamento:* ${p.subtitle}\n*Prazo de entrega:* até 2 dias após a coleta da medida\n\nPoderia me passar mais informações?`);
+  const msg=encodeURIComponent(`Olá! Vim pelo site HM e gostaria de encomendar:\n\n*Modelo:* ${p.name}\n*Largura:* ${mW}mm\n*Acabamento:* ${p.subtitle}\n\nPoderia me passar mais informações?`);
   document.getElementById('m-wa').href=`https://wa.me/${phone}?text=${msg}`;
 }
 function closeModal(){
