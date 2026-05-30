@@ -467,17 +467,13 @@ function renderCatalog(){
   g.innerHTML=prods.map(p=>{
     cardIdx[p.id]=0;
     const imgs=p.imgs||[];
-    const slides=imgs.length
-      ?imgs.map(s=>`<div class="slide"><img src="${x(s)}" loading="lazy" alt="${x(p.name)}" draggable="false"></div>`).join('')
-      :`<div class="slide"><div class="slide-ph">Foto em breve</div></div>`;
-    const dots=imgs.length>1
-      ?`<div class="dots">${imgs.map((_,i)=>`<button class="dot${i===0?' on':''}" data-pid="${p.id}" data-i="${i}"></button>`).join('')}</div>`
-      :'';
+    const thumb=imgs.length
+      ?`<img src="${x(imgs[0])}" loading="lazy" alt="${x(p.name)}" draggable="false" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">`
+      :`<div class="slide-ph">Foto em breve</div>`;
     return `<div class="card">
       <div class="slider" id="sl-${p.id}">
-        <div class="slider-track" id="st-${p.id}">${slides}</div>
+        ${thumb}
         <span class="badge">Sob Encomenda</span>
-        ${dots}
       </div>
       <div class="card-info" onclick="openModal('${p.id}')">
         <h3>${x(p.name)}</h3>
@@ -488,19 +484,7 @@ function renderCatalog(){
     </div>`;
   }).join('');
 
-  // dots click
-  document.querySelectorAll('.dot').forEach(d=>{
-    d.addEventListener('click',e=>{
-      e.stopPropagation();
-      goCard(d.dataset.pid, parseInt(d.dataset.i));
-    });
-  });
 
-  // swipe on each card slider
-  prods.forEach(p=>{
-    const el=document.getElementById('sl-'+p.id);
-    if(el)addSwipe(el, dir=>stepCard(p.id, dir));
-  });
 }
 
 function goCard(id, i){
